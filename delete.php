@@ -1,0 +1,25 @@
+<?php
+$servername = "192.168.100.103";
+$username = "group1-1";
+$password = "Unistra2023#";
+$dbname = "bdd_ludo";
+
+try {
+    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // set the PDO error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//  echo "Connected successfully";
+}
+ catch(PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+// Récupération des données POST
+$ID = $_POST['id_joueur'];
+        // Préparation et exécution de la requête SQL pour mettre à jour le mot de passe de l'utilisateur
+         $stmt = $pdo->prepare("DELETE from Joueur WHERE id_joueur = :id_joueur");
+         $stmt->execute(['id_joueur' => $ID]);
+        if($stmt->rowCount() == 1)
+           echo "1"; // Supression  du compte
+        else
+          echo "0";  // Echec de modification
+?>
